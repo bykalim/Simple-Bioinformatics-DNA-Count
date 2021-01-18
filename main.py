@@ -39,4 +39,21 @@ st.text_area("", sequence, height=150)
 result = DNA_nucleotide_count(sequence)
 
 st.subheader("**Dictionary**")
-st.write(result)
+st.write("""
+- There are {A} adenine (A) \n
+- There are {T} thymine (T) \n
+- There are {G} adenine (guanine) \n
+- There are {C} thymine (cytosine  
+""".format(
+    A=result['A'],
+    T=result['T'],
+    C=result['C'],
+    G=result['G'],
+))
+
+st.subheader("**DataFrame**")
+dataFrame = pd.DataFrame.from_dict(result, orient='index')
+dataFrame = dataFrame.rename({0: 'count'}, axis='columns')
+dataFrame.reset_index(inplace=True)
+dataFrame = dataFrame.rename(columns={"index": "nucleotide"})
+st.write(dataFrame)
