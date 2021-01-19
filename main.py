@@ -43,7 +43,7 @@ st.write("""
 - There are {A} adenine (A) \n
 - There are {T} thymine (T) \n
 - There are {G} adenine (guanine) \n
-- There are {C} thymine (cytosine  
+- There are {C} thymine (cytosine)
 """.format(
     A=result['A'],
     T=result['T'],
@@ -57,3 +57,16 @@ dataFrame = dataFrame.rename({0: 'count'}, axis='columns')
 dataFrame.reset_index(inplace=True)
 dataFrame = dataFrame.rename(columns={"index": "nucleotide"})
 st.write(dataFrame)
+
+st.subheader("**Graph**")
+p = alt.Chart(dataFrame).mark_bar().encode(
+    x='nucleotide',
+    y='count'
+)
+
+p = p.properties(
+    width=alt.Step(80)
+)
+
+st.write(p)
+
